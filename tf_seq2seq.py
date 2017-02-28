@@ -2,15 +2,11 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import copy
-
 # We disable pylint because we need python3 compatibility.
 from six.moves import xrange  # pylint: disable=redefined-builtin
-from six.moves import zip  # pylint: disable=redefined-builtin
+from six.moves import zip     # pylint: disable=redefined-builtin
 
-from tensorflow.contrib.rnn.python.ops import core_rnn
-from tensorflow.contrib.rnn.python.ops import core_rnn_cell
-from tensorflow.contrib.rnn.python.ops import core_rnn_cell_impl
+from tensorflow.python import shape
 from tensorflow.python.framework import dtypes
 from tensorflow.python.framework import ops
 from tensorflow.python.ops import array_ops
@@ -18,11 +14,13 @@ from tensorflow.python.ops import control_flow_ops
 from tensorflow.python.ops import embedding_ops
 from tensorflow.python.ops import math_ops
 from tensorflow.python.ops import nn_ops
+from tensorflow.python.ops import rnn
+from tensorflow.python.ops import rnn_cell
 from tensorflow.python.ops import variable_scope
 from tensorflow.python.util import nest
 
 # TODO(ebrevdo): Remove once _linear is fully deprecated.
-linear = core_rnn_cell_impl._linear  # pylint: disable=protected-access
+linear = rnn_cell._linear  # pylint: disable=protected-access
 
 
 def embedding_attention_seq2seq(encoder_inputs,
@@ -276,25 +274,23 @@ def attention_decoder(decoder_inputs,
     return outputs, state
 
 
-def _extract_argmax_and_embed(embedding,
-                              output_projection=None,
+def _extract_argmax_and_embed(embedding, output_projection=None,
                               update_embedding=True):
-    print("Inside Method Extract ArgMax and Embed")
-
-    def loop_function(prev, _):
-        print("Inside Inner Loop Function")
-        if output_projection is not None:
-            prev = nn_ops.xw_plus_b(prev, output_projection[0], output_projection[1])
-        prev_symbol = math_ops.argmax(prev, 1)
-        # Note that gradients will not propagate through the second parameter of
-        # embedding_lookup.
-        emb_prev = embedding_ops.embedding_lookup(embedding, prev_symbol)
-        if not update_embedding:
-            emb_prev = array_ops.stop_gradient(emb_prev)
-        return emb_prev
-
-    return loop_function
-
+  
+  print("Inside Method Extract ArgMax and Embed")
+  def loop_function(prev, _):
+    print("Inside Inner Loop Function")
+    if output_projection is not None:
+      prev = nn_ops.xw_plus_b(
+          prev, output_projection[0], output_projection[1])
+    prev_symbol = math_ops.argmax(prev, 1)
+    # Note that gradients will not propagate through the second parameter of
+    # embedding_lookup.
+    emb_prev = embedding_ops.embedding_lookup(embedding, prev_symbol)
+    if not update_embedding:
+      emb_prev = array_ops.stop_gradient(emb_prev)
+    return emb_prev
+  return loop_function
 
 def model_with_buckets(encoder_inputs,
                        decoder_inputs,

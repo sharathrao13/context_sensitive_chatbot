@@ -19,6 +19,8 @@ from tensorflow.python.ops import rnn_cell
 from tensorflow.python.ops import variable_scope
 from tensorflow.python.util import nest
 
+import numpy as np
+
 # TODO(ebrevdo): Remove once _linear is fully deprecated.
 linear = rnn_cell._linear  # pylint: disable=protected-access
 
@@ -259,10 +261,8 @@ def embedding_attention_seq2seq(encoder_inputs,
                                 initial_state_attention=False):
     print("Inside Method Embedding Attention Seq2Seq")
 
-    print("Shape of encoder input {0}".format(type(encoder_inputs)))
-    print (encoder_inputs)
-    print (decoder_inputs)
-    print("Shape of decoder input {0}".format(type(decoder_inputs)))
+    print("Shape of encoder input {0}".format(len(encoder_inputs)))
+    print("Shape of decoder input {0}".format(len(decoder_inputs)))
     print("num_encoder_symbols = {0}".format(num_encoder_symbols))
     print("num_decoder_symbols {0}".format(num_decoder_symbols))
     print("embedding_size {0}".format(embedding_size))
@@ -464,6 +464,17 @@ def model_with_buckets(encoder_inputs, decoder_inputs, targets, weights,
     if len(weights) < buckets[-1][1]:
         raise ValueError("Length of weights (%d) must be at least that of last"
                          "bucket (%d)." % (len(weights), buckets[-1][1]))
+
+    print("In method model with buckets")
+
+    print("The encoder input shape {0}".format(len(encoder_inputs)))
+    print("The decoder input shape {0}".format(len(decoder_inputs)))
+    print("The targets input shape {0}".format(len(targets)))
+    print("The weights input shape {0}".format(len(weights)))
+    print("The encoder input data {0}".format(encoder_inputs[0]))
+    print("The decoder input data {0}".format(decoder_inputs[0]))
+    print("The targets input data {0}".format(targets[0]))
+    print("The weights input data {0}".format(weights[0]))
 
     all_inputs = encoder_inputs + decoder_inputs + targets + weights
     losses = []

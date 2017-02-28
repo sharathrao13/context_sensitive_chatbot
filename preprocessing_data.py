@@ -3,8 +3,8 @@ import collections
 import shutil
 from tensorflow.python.platform import gfile
 
-num_movie_scripts = 10
-vocabulary_size =7000
+num_movie_scripts = 6
+vocabulary_size =200
 fraction_dev = 50
 path_for_x_train = 'X_train.txt'
 path_for_y_train = 'y_train.txt'

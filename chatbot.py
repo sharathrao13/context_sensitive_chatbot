@@ -33,9 +33,9 @@ FLAGS = tf.app.flags.FLAGS
 learning_rate = 0.5
 learning_rate_decay = 0.99
 train_dir = "./"
-steps_per_checkpoint = 10
+steps_per_checkpoint = 1
 gradients_clip = 5.0
-num_movie_scripts = 6
+num_movie_scripts = 2
 
 # We use a number of buckets and pad to the closest one for efficiency.
 # See seq2seq_model.Seq2SeqModel for details of how they work.
@@ -109,6 +109,7 @@ def train():
         step_time, loss = 0.0, 0.0
         current_step = 0
         previous_losses = []
+        print("Training begins now ...")
         while True:
 
             ran_num = np.random.random_sample()
@@ -117,6 +118,8 @@ def train():
             # Get a batch and make a step.
             start_time = time.time()
             encoder_inputs, decoder_inputs, target_weights = model.get_batch(train_set, bucket_id)
+            print("Shape of target weights {0}".format(np.shape(target_weights)))
+            print(target_weights)
             _, step_loss, _ = model.step(sess, encoder_inputs, decoder_inputs, target_weights, bucket_id, False)
             step_time += (time.time() - start_time) / steps_per_checkpoint
             loss += step_loss / steps_per_checkpoint
