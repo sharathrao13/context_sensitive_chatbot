@@ -20,11 +20,11 @@ import seq2seq_model
 vocab_path = './vocabulary_for_movies.txt'
 
 # Variables user can change
-tf.app.flags.DEFINE_integer("batch_size", 64, "Batch size to use during training")
-tf.app.flags.DEFINE_integer("size", 256, "Size of each model layer")
-tf.app.flags.DEFINE_integer("num_layers", 2, "Number of layers in the model")
+tf.app.flags.DEFINE_integer("batch_size", 128, "Batch size to use during training")
+tf.app.flags.DEFINE_integer("size", 1024, "Size of each model layer")
+tf.app.flags.DEFINE_integer("num_layers", 4, "Number of layers in the model")
 tf.app.flags.DEFINE_integer("vocab_size", 7000, "Vocabulary size")
-tf.app.flags.DEFINE_boolean("use_lstm", False, "Use LSTM as cell")
+tf.app.flags.DEFINE_boolean("use_lstm", True, "Use LSTM as cell")
 tf.app.flags.DEFINE_boolean("decode", False, "Set to True for interactive decoding")
 
 FLAGS = tf.app.flags.FLAGS

@@ -38,6 +38,14 @@ def embedding_attention_seq2seq(encoder_inputs,
                                 scope=None,
                                 initial_state_attention=False):
     print("Inside Method Embedding Attention Seq2Seq")
+
+    print("Shape of encoder input {0}".format(type(encoder_inputs)))
+    print("Shape of decoder input {0}".format(type(decoder_inputs)))
+    print("num_encoder_symbols = {0}".format(num_encoder_symbols))
+    print("num_decoder_symbols {0}".format(num_decoder_symbols))
+    print("embedding_size {0}".format(embedding_size))
+    print("output_projection {0}".format(output_projection))
+
     with variable_scope.variable_scope(
                     scope or "embedding_attention_seq2seq", dtype=dtype) as scope:
         dtype = scope.dtype
@@ -335,3 +343,56 @@ def model_with_buckets(encoder_inputs,
                                     softmax_loss_function=softmax_loss_function))
 
     return outputs, losses
+
+
+def sequence_loss_by_example(logits,
+                             targets,
+                             weights,
+                             average_across_timesteps=True,
+                             softmax_loss_function=None,
+                             name=None):
+    if len(targets) != len(logits) or len(weights) != len(logits):
+        raise ValueError("Lengths of logits, weights, and targets must be the same "
+                         "%d, %d, %d." % (len(logits), len(weights), len(targets)))
+    with ops.name_scope(name, "sequence_loss_by_example",
+                        logits + targets + weights):
+        log_perp_list = []
+        for logit, target, weight in zip(logits, targets, weights):
+            if softmax_loss_function is None:
+                # TODO(irving,ebrevdo): This reshape is needed because
+                # sequence_loss_by_example is called with scalars sometimes, which
+                # violates our general scalar strictness policy.
+                target = array_ops.reshape(target, [-1])
+                crossent = nn_ops.sparse_softmax_cross_entropy_with_logits(
+                        labels=target, logits=logit)
+            else:
+                crossent = softmax_loss_function(target, logit)
+            log_perp_list.append(crossent * weight)
+        log_perps = math_ops.add_n(log_perp_list)
+        if average_across_timesteps:
+            total_size = math_ops.add_n(weights)
+            total_size += 1e-12  # Just to avoid division by 0 for all-0 weights.
+            log_perps /= total_size
+    return log_perps
+
+
+def sequence_loss(logits,
+                  targets,
+                  weights,
+                  average_across_timesteps=True,
+                  average_across_batch=True,
+                  softmax_loss_function=None,
+                  name=None):
+    with ops.name_scope(name, "sequence_loss", logits + targets + weights):
+        cost = math_ops.reduce_sum(
+                sequence_loss_by_example(
+                        logits,
+                        targets,
+                        weights,
+                        average_across_timesteps=average_across_timesteps,
+                        softmax_loss_function=softmax_loss_function))
+        if average_across_batch:
+            batch_size = array_ops.shape(targets[0])[0]
+            return cost / math_ops.cast(batch_size, cost.dtype)
+        else:
+            return cost
