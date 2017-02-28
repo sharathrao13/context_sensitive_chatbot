@@ -37,6 +37,7 @@ def embedding_attention_seq2seq(encoder_inputs,
                                 dtype=None,
                                 scope=None,
                                 initial_state_attention=False):
+    print("Inside Method Embedding Attention Seq2Seq")
     with variable_scope.variable_scope(
                     scope or "embedding_attention_seq2seq", dtype=dtype) as scope:
         dtype = scope.dtype
@@ -124,6 +125,8 @@ def embedding_attention_decoder(decoder_inputs,
                                 dtype=None,
                                 scope=None,
                                 initial_state_attention=False):
+    print("Inside Method Embedding Attention Decoder")
+
     if output_size is None:
         output_size = cell.output_size
     if output_projection is not None:
@@ -162,6 +165,8 @@ def attention_decoder(decoder_inputs,
                       dtype=None,
                       scope=None,
                       initial_state_attention=False):
+    print("Inside Method Attention Decoder")
+
     if not decoder_inputs:
         raise ValueError("Must provide at least 1 input to attention decoder.")
     if num_heads < 1:
@@ -266,7 +271,10 @@ def attention_decoder(decoder_inputs,
 def _extract_argmax_and_embed(embedding,
                               output_projection=None,
                               update_embedding=True):
+    print("Inside Method Extract ArgMax and Embed")
+
     def loop_function(prev, _):
+        print("Inside Inner Loop Function")
         if output_projection is not None:
             prev = nn_ops.xw_plus_b(prev, output_projection[0], output_projection[1])
         prev_symbol = math_ops.argmax(prev, 1)
@@ -278,3 +286,52 @@ def _extract_argmax_and_embed(embedding,
         return emb_prev
 
     return loop_function
+
+
+def model_with_buckets(encoder_inputs,
+                       decoder_inputs,
+                       targets,
+                       weights,
+                       buckets,
+                       seq2seq,
+                       softmax_loss_function=None,
+                       per_example_loss=False,
+                       name=None):
+    print("Inside Method Model with Buckets")
+
+    if len(encoder_inputs) < buckets[-1][0]:
+        raise ValueError("Length of encoder_inputs (%d) must be at least that of la"
+                         "st bucket (%d)." % (len(encoder_inputs), buckets[-1][0]))
+    if len(targets) < buckets[-1][1]:
+        raise ValueError("Length of targets (%d) must be at least that of last"
+                         "bucket (%d)." % (len(targets), buckets[-1][1]))
+    if len(weights) < buckets[-1][1]:
+        raise ValueError("Length of weights (%d) must be at least that of last"
+                         "bucket (%d)." % (len(weights), buckets[-1][1]))
+
+    all_inputs = encoder_inputs + decoder_inputs + targets + weights
+    losses = []
+    outputs = []
+    with ops.name_scope(name, "model_with_buckets", all_inputs):
+        for j, bucket in enumerate(buckets):
+            with variable_scope.variable_scope(
+                    variable_scope.get_variable_scope(), reuse=True if j > 0 else None):
+                bucket_outputs, _ = seq2seq(encoder_inputs[:bucket[0]],
+                                            decoder_inputs[:bucket[1]])
+                outputs.append(bucket_outputs)
+                if per_example_loss:
+                    losses.append(
+                            sequence_loss_by_example(
+                                    outputs[-1],
+                                    targets[:bucket[1]],
+                                    weights[:bucket[1]],
+                                    softmax_loss_function=softmax_loss_function))
+                else:
+                    losses.append(
+                            sequence_loss(
+                                    outputs[-1],
+                                    targets[:bucket[1]],
+                                    weights[:bucket[1]],
+                                    softmax_loss_function=softmax_loss_function))
+
+    return outputs, losses
