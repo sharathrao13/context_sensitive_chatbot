@@ -20,8 +20,8 @@ from __future__ import division
 from __future__ import print_function
 
 import random
-from tf_seq2seq import embedding_attention_seq2seq
-from tf_seq2seq import model_with_buckets
+from tf_seq2seq_old import embedding_attention_seq2seq
+from tf_seq2seq_old import model_with_buckets
 
 import numpy as np
 from six.moves import xrange  # pylint: disable=redefined-builtin
@@ -134,8 +134,8 @@ class Seq2SeqModel(object):
                                                       name="decoder{0}".format(i)))
             self.target_weights.append(tf.placeholder(tf.float32, shape=[None],
                                                       name="weight{0}".format(i)))
-        for i in xrange(buckets[-1][2]):
-            self.context_inputs.append(tf.placeholder(tf.float32, shape=[None], name="context{0}".format(i)))
+        #for i in xrange(buckets[-1][2]):
+            #self.context_inputs.append(tf.placeholder(tf.float32, shape=[None], name="context{0}".format(i)))
 
         # Our targets are decoder inputs shifted by one.
         targets = [self.decoder_inputs[i + 1]
@@ -262,7 +262,7 @@ class Seq2SeqModel(object):
             encoder_input, decoder_input = random.choice(data[bucket_id])
 
             # Encoder inputs are padded and then reversed.
-            encoder_pad = [prepos.PAD_ID] * (encoder_size - len(encoder_input))
+            encoder_pad = [prepros.PAD_ID] * (encoder_size - len(encoder_input))
             encoder_inputs.append(list(reversed(encoder_input + encoder_pad)))
 
             # Decoder inputs get an extra "GO" symbol, and are padded then.
