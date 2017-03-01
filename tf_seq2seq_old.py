@@ -27,7 +27,6 @@ linear = rnn_cell._linear  # pylint: disable=protected-access
 
 def _extract_argmax_and_embed(embedding, output_projection=None,
                               update_embedding=True):
-
     def loop_function(prev, _):
         if output_projection is not None:
             prev = nn_ops.xw_plus_b(
@@ -53,58 +52,9 @@ def attention_decoder(decoder_inputs,
                       dtype=None,
                       scope=None,
                       initial_state_attention=False):
-    """RNN decoder with attention for the sequence-to-sequence model.
 
-    In this context "attention" means that, during decoding, the RNN can look up
-    information in the additional tensor attention_states, and it does this by
-    focusing on a few entries from the tensor. This model has proven to yield
-    especially good results in a number of sequence-to-sequence tasks. This
-    implementation is based on http://arxiv.org/abs/1412.7449 (see below for
-    details). It is recommended for complex sequence-to-sequence tasks.
+    print("Inside Attention Decoder")
 
-    Args:
-      decoder_inputs: A list of 2D Tensors [batch_size x input_size].
-      initial_state: 2D Tensor [batch_size x cell.state_size].
-      attention_states: 3D Tensor [batch_size x attn_length x attn_size].
-      cell: rnn_cell.RNNCell defining the cell function and size.
-      output_size: Size of the output vectors; if None, we use cell.output_size.
-      num_heads: Number of attention heads that read from attention_states.
-      loop_function: If not None, this function will be applied to i-th output
-        in order to generate i+1-th input, and decoder_inputs will be ignored,
-        except for the first element ("GO" symbol). This can be used for decoding,
-        but also for training to emulate http://arxiv.org/abs/1506.03099.
-        Signature -- loop_function(prev, i) = next
-          * prev is a 2D Tensor of shape [batch_size x output_size],
-          * i is an integer, the step number (when advanced control is needed),
-          * next is a 2D Tensor of shape [batch_size x input_size].
-      dtype: The dtype to use for the RNN initial state (default: tf.float32).
-      scope: VariableScope for the created subgraph; default: "attention_decoder".
-      initial_state_attention: If False (default), initial attentions are zero.
-        If True, initialize the attentions from the initial state and attention
-        states -- useful when we wish to resume decoding from a previously
-        stored decoder state and attention states.
-
-    Returns:
-      A tuple of the form (outputs, state), where:
-        outputs: A list of the same length as decoder_inputs of 2D Tensors of
-          shape [batch_size x output_size]. These represent the generated outputs.
-          Output i is computed from input i (which is either the i-th element
-          of decoder_inputs or loop_function(output {i-1}, i)) as follows.
-          First, we run the cell on a combination of the input and previous
-          attention masks:
-            cell_output, new_state = cell(linear(input, prev_attn), prev_state).
-          Then, we calculate new attention masks:
-            new_attn = softmax(V^T * tanh(W * attention_states + U * new_state))
-          and then we calculate the output:
-            output = linear(cell_output, new_attn).
-        state: The state of each decoder cell the final time-step.
-          It is a 2D Tensor of shape [batch_size x cell.state_size].
-
-    Raises:
-      ValueError: when num_heads is not positive, there are no inputs, shapes
-        of attention_states are not set, or input size cannot be inferred
-        from the input.
-    """
     if not decoder_inputs:
         raise ValueError("Must provide at least 1 input to attention decoder.")
     if num_heads < 1:
@@ -220,6 +170,8 @@ def embedding_attention_decoder(decoder_inputs,
                                 scope=None,
                                 initial_state_attention=False):
 
+    print("Inside Embedding Attention Decoder")
+
     if output_size is None:
         output_size = cell.output_size
     if output_projection is not None:
@@ -278,18 +230,24 @@ def embedding_attention_seq2seq(encoder_inputs,
         encoder_outputs, encoder_state = rnn.rnn(
                 encoder_cell, encoder_inputs, dtype=dtype)
 
+        print("Inside method embedding_attention_seq2seq. Encoder Outputs {0} Encode State {1}".format(
+            np.shape(encoder_outputs), np.shape(encoder_state)))
+
         # First calculate a concatenation of encoder outputs to put attention on.
         top_states = [array_ops.reshape(e, [-1, 1, cell.output_size])
                       for e in encoder_outputs]
         attention_states = array_ops.concat(1, top_states)
 
+        print("Attention States has been created of size {0}".format(np.shape(attention_states)))
         # Decoder.
         output_size = None
         if output_projection is None:
             cell = rnn_cell.OutputProjectionWrapper(cell, num_decoder_symbols)
             output_size = num_decoder_symbols
+            print("The output size is {0}".format(output_size))
 
         if isinstance(feed_previous, bool):
+            print ("Number of heads {0}".format(num_heads))
             return embedding_attention_decoder(
                     decoder_inputs,
                     encoder_state,
@@ -341,24 +299,9 @@ def embedding_attention_seq2seq(encoder_inputs,
 def sequence_loss_by_example(logits, targets, weights,
                              average_across_timesteps=True,
                              softmax_loss_function=None, name=None):
-    """Weighted cross-entropy loss for a sequence of logits (per example).
+    print("Inside the method sequence loss by example")
 
-    Args:
-      logits: List of 2D Tensors of shape [batch_size x num_decoder_symbols].
-      targets: List of 1D batch-sized int32 Tensors of the same length as logits.
-      weights: List of 1D batch-sized float-Tensors of the same length as logits.
-      average_across_timesteps: If set, divide the returned cost by the total
-        label weight.
-      softmax_loss_function: Function (inputs-batch, labels-batch) -> loss-batch
-        to be used instead of the standard softmax (the default if this is None).
-      name: Optional name for this operation, default: "sequence_loss_by_example".
 
-    Returns:
-      1D batch-sized float Tensor: The log-perplexity for each sequence.
-
-    Raises:
-      ValueError: If len(logits) is different from len(targets) or len(weights).
-    """
     if len(targets) != len(logits) or len(weights) != len(logits):
         raise ValueError("Lengths of logits, weights, and targets must be the same "
                          "%d, %d, %d." % (len(logits), len(weights), len(targets)))
@@ -387,25 +330,8 @@ def sequence_loss_by_example(logits, targets, weights,
 def sequence_loss(logits, targets, weights,
                   average_across_timesteps=True, average_across_batch=True,
                   softmax_loss_function=None, name=None):
-    """Weighted cross-entropy loss for a sequence of logits, batch-collapsed.
 
-    Args:
-      logits: List of 2D Tensors of shape [batch_size x num_decoder_symbols].
-      targets: List of 1D batch-sized int32 Tensors of the same length as logits.
-      weights: List of 1D batch-sized float-Tensors of the same length as logits.
-      average_across_timesteps: If set, divide the returned cost by the total
-        label weight.
-      average_across_batch: If set, divide the returned cost by the batch size.
-      softmax_loss_function: Function (inputs-batch, labels-batch) -> loss-batch
-        to be used instead of the standard softmax (the default if this is None).
-      name: Optional name for this operation, defaults to "sequence_loss".
-
-    Returns:
-      A scalar float Tensor: The average log-perplexity per symbol (weighted).
-
-    Raises:
-      ValueError: If len(logits) is different from len(targets) or len(weights).
-    """
+    print("Inside the method sequence loss")
     with ops.name_scope(name, "sequence_loss", logits + targets + weights):
         cost = math_ops.reduce_sum(sequence_loss_by_example(
                 logits, targets, weights,
@@ -467,10 +393,10 @@ def model_with_buckets(encoder_inputs, decoder_inputs, targets, weights,
 
     print("In method model with buckets")
 
-    print("The encoder input shape {0}".format(len(encoder_inputs)))
-    print("The decoder input shape {0}".format(len(decoder_inputs)))
-    print("The targets input shape {0}".format(len(targets)))
-    print("The weights input shape {0}".format(len(weights)))
+    print("The encoder input shape {0}".format(np.shape(encoder_inputs)))
+    print("The decoder input shape {0}".format(np.shape(decoder_inputs)))
+    print("The targets input shape {0}".format(np.shape(targets)))
+    print("The weights input shape {0}".format(np.shape(weights)))
     print("The encoder input data {0}".format(encoder_inputs[0]))
     print("The decoder input data {0}".format(decoder_inputs[0]))
     print("The targets input data {0}".format(targets[0]))
@@ -479,10 +405,12 @@ def model_with_buckets(encoder_inputs, decoder_inputs, targets, weights,
     all_inputs = encoder_inputs + decoder_inputs + targets + weights
     losses = []
     outputs = []
+    print("Calling the function embedding_attention_seq2seq {0} times".format(len(buckets)))
     with ops.name_scope(name, "model_with_buckets", all_inputs):
         for j, bucket in enumerate(buckets):
             with variable_scope.variable_scope(variable_scope.get_variable_scope(),
                                                reuse=True if j > 0 else None):
+
                 bucket_outputs, _ = seq2seq(encoder_inputs[:bucket[0]],
                                             decoder_inputs[:bucket[1]])
                 outputs.append(bucket_outputs)
@@ -496,22 +424,3 @@ def model_with_buckets(encoder_inputs, decoder_inputs, targets, weights,
                             softmax_loss_function=softmax_loss_function))
 
     return outputs, losses
-
-def rnn_decoder(decoder_inputs, initial_state, cell, loop_function=None,
-                scope=None):
-
-  with variable_scope.variable_scope(scope or "rnn_decoder"):
-    state = initial_state
-    outputs = []
-    prev = None
-    for i, inp in enumerate(decoder_inputs):
-      if loop_function is not None and prev is not None:
-        with variable_scope.variable_scope("loop_function", reuse=True):
-          inp = loop_function(prev, i)
-      if i > 0:
-        variable_scope.get_variable_scope().reuse_variables()
-      output, state = cell(inp, state)
-      outputs.append(output)
-      if loop_function is not None:
-        prev = output
-  return outputs, state

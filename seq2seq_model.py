@@ -49,6 +49,9 @@ class Seq2SeqModel(object):
                  num_layers, max_gradient_norm, batch_size, learning_rate,
                  learning_rate_decay_factor, use_lstm=False,
                  num_samples=512, forward_only=False):
+
+
+        print("Inside method Init of Seq2Seq Model ")
         """Create the model.
 
         Args:
@@ -99,6 +102,10 @@ class Seq2SeqModel(object):
                     labels = tf.reshape(labels, [-1, 1])
                     return tf.nn.sampled_softmax_loss(w_t, b, inputs, labels, num_samples,
                                                       self.target_vocab_size)
+            if output_projection:
+                print ("The shape of Output Project in Seq2Seq Model is {0}".format(np.shape(output_projection)))
+            else:
+                print ("Output Projection is None")
 
             softmax_loss_function = sampled_loss
 
@@ -125,6 +132,8 @@ class Seq2SeqModel(object):
         self.decoder_inputs = []
         self.target_weights = []
         self.context_inputs = []
+
+        #Populated during the step function call
 
         for i in xrange(buckets[-1][0]):  # Last bucket is the biggest one.
             self.encoder_inputs.append(tf.placeholder(tf.int32, shape=[None],
@@ -155,7 +164,7 @@ class Seq2SeqModel(object):
                         for output in self.outputs[b]
                         ]
         else:
-            self.outputs, self.losses = tf.nn.seq2seq.model_with_buckets(
+            self.outputs, self.losses = model_with_buckets(
                     self.encoder_inputs, self.decoder_inputs, targets,
                     self.target_weights, buckets,
                     lambda x, y: seq2seq_f(x, y, False),
@@ -166,7 +175,7 @@ class Seq2SeqModel(object):
         if not forward_only:
             self.gradient_norms = []
             self.updates = []
-            opt = tf.train.GradientDescentOptimizer(self.learning_rate)
+            opt = tf.train.AdamOptimizer(self.learning_rate)
             for b in xrange(len(buckets)):
                 gradients = tf.gradients(self.losses[b], params)
                 clipped_gradients, norm = tf.clip_by_global_norm(gradients,
@@ -198,6 +207,9 @@ class Seq2SeqModel(object):
             target_weights disagrees with bucket size for the specified bucket_id.
         """
         # Check if the sizes match.
+
+        print("Inside method Step in Seq2Seq Model ")
+
         encoder_size, decoder_size = self.buckets[bucket_id]
         if len(encoder_inputs) != encoder_size:
             raise ValueError("Encoder length must be equal to the one in bucket,"

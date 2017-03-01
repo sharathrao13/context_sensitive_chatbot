@@ -167,7 +167,7 @@ def decode():
         vocab, rev_vocab = prepros.initialize_vocabulary(vocab_path)
 
         # Decode from standard input.
-        sys.stdout.write("Human >: ")
+        sys.stdout.write("Message >: ")
         sys.stdout.flush()
         sentence = sys.stdin.readline()
         while sentence:
@@ -178,13 +178,14 @@ def decode():
             bucket_id = min([b for b in xrange(len(_buckets)) if _buckets[b][0] > len(token_ids)])
             encoder_inputs, decoder_inputs, target_weights = model.get_batch({bucket_id: [(token_ids, [])]}, bucket_id)
             _, _, output_logits = model.step(sess, encoder_inputs, decoder_inputs, target_weights, bucket_id, True)
+            print ("The shape of the output logits from the step function is {0}".format(np.shape(output_logits)))
             outputs = [int(np.argmax(logit, axis=1)) for logit in output_logits]
             # If there is an EOS symbol in outputs, cut them at that point.
             if prepros.EOS_ID in outputs:
                 outputs = outputs[:outputs.index(prepros.EOS_ID)]
 
-            print("Ola >: " + " ".join([tf.compat.as_str(rev_vocab[output]) for output in outputs]))
-            print("Human >: ", end="")
+            print("Chatbot Response >: " + " ".join([tf.compat.as_str(rev_vocab[output]) for output in outputs]))
+            print("Message >: ", end="")
             sys.stdout.flush()
             sentence = sys.stdin.readline()
 
