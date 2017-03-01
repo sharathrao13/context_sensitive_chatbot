@@ -24,7 +24,7 @@ tf.app.flags.DEFINE_integer("batch_size", 128, "Batch size to use during trainin
 tf.app.flags.DEFINE_integer("size", 1024, "Size of each model layer")
 tf.app.flags.DEFINE_integer("num_layers", 4, "Number of layers in the model")
 tf.app.flags.DEFINE_integer("vocab_size", 200, "Vocabulary size")
-tf.app.flags.DEFINE_boolean("use_lstm", True, "Use LSTM as cell")
+tf.app.flags.DEFINE_boolean("use_lstm", False, "Use LSTM as cell")
 tf.app.flags.DEFINE_boolean("decode", False, "Set to True for interactive decoding")
 
 FLAGS = tf.app.flags.FLAGS
@@ -119,7 +119,7 @@ def train():
             start_time = time.time()
             encoder_inputs, decoder_inputs, target_weights = model.get_batch(train_set, bucket_id)
             print("Shape of target weights {0}".format(np.shape(target_weights)))
-            print(target_weights)
+            #print(target_weights)
             _, step_loss, _ = model.step(sess, encoder_inputs, decoder_inputs, target_weights, bucket_id, False)
             step_time += (time.time() - start_time) / steps_per_checkpoint
             loss += step_loss / steps_per_checkpoint

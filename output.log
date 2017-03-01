@@ -1,0 +1,73 @@
+Training the model
+Creating 4 layers of 1024
+Inside method Init of Seq2Seq Model 
+In method model with buckets
+The encoder input shape (40,)
+The decoder input shape (51,)
+The targets input shape (50,)
+The weights input shape (51,)
+The encoder input data Tensor("encoder0:0", shape=(?,), dtype=int32)
+The decoder input data Tensor("decoder0:0", shape=(?,), dtype=int32)
+The targets input data Tensor("decoder1:0", shape=(?,), dtype=int32)
+The weights input data Tensor("weight0:0", shape=(?,), dtype=float32)
+Calling the function embedding_attention_seq2seq 4 times
+Inside Method Embedding Attention Seq2Seq
+Shape of encoder input 5
+Shape of decoder input 10
+num_encoder_symbols = 200
+num_decoder_symbols 200
+embedding_size 1024
+output_projection None
+Inside method embedding_attention_seq2seq. Encoder Outputs (5,) Encode State (4,)
+Attention States has been created of size ()
+The output size is 200
+Number of heads 1
+Inside Embedding Attention Decoder
+Inside Attention Decoder
+Inside the method sequence loss
+Inside the method sequence loss by example
+Inside Method Embedding Attention Seq2Seq
+Shape of encoder input 10
+Shape of decoder input 15
+num_encoder_symbols = 200
+num_decoder_symbols 200
+embedding_size 1024
+output_projection None
+Inside method embedding_attention_seq2seq. Encoder Outputs (10,) Encode State (4,)
+Attention States has been created of size ()
+The output size is 200
+Number of heads 1
+Inside Embedding Attention Decoder
+Inside Attention Decoder
+Inside the method sequence loss
+Inside the method sequence loss by example
+Inside Method Embedding Attention Seq2Seq
+Shape of encoder input 20
+Shape of decoder input 25
+num_encoder_symbols = 200
+num_decoder_symbols 200
+embedding_size 1024
+output_projection None
+Inside method embedding_attention_seq2seq. Encoder Outputs (20,) Encode State (4,)
+Attention States has been created of size ()
+The output size is 200
+Number of heads 1
+Inside Embedding Attention Decoder
+Inside Attention Decoder
+Inside the method sequence loss
+Inside the method sequence loss by example
+Inside Method Embedding Attention Seq2Seq
+Shape of encoder input 40
+Shape of decoder input 50
+num_encoder_symbols = 200
+num_decoder_symbols 200
+embedding_size 1024
+output_projection None
+Inside method embedding_attention_seq2seq. Encoder Outputs (40,) Encode State (4,)
+Attention States has been created of size ()
+The output size is 200
+Number of heads 1
+Inside Embedding Attention Decoder
+Inside Attention Decoder
+Inside the method sequence loss
+Inside the method sequence loss by example

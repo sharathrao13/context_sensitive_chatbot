@@ -1,0 +1,388 @@
+Training the model
+Creating 4 layers of 1024
+Inside method Init of Seq2Seq Model 
+In method model with buckets
+The encoder input shape (40,)
+The decoder input shape (51,)
+The targets input shape (50,)
+The weights input shape (51,)
+The encoder input data Tensor("encoder0:0", shape=(?,), dtype=int32)
+The decoder input data Tensor("decoder0:0", shape=(?,), dtype=int32)
+The targets input data Tensor("decoder1:0", shape=(?,), dtype=int32)
+The weights input data Tensor("weight0:0", shape=(?,), dtype=float32)
+Calling the function embedding_attention_seq2seq 4 times
+Inside Method Embedding Attention Seq2Seq
+Shape of encoder input 5
+Shape of decoder input 10
+num_encoder_symbols = 200
+num_decoder_symbols 200
+embedding_size 1024
+output_projection None
+Inside method embedding_attention_seq2seq. Encoder Outputs (5,) Encode State (4,)
+Attention States has been created of size ()
+The output size is 200
+Number of heads 1
+Inside Embedding Attention Decoder
+Inside Attention Decoder
+Inside the method sequence loss
+Inside the method sequence loss by example
+Inside Method Embedding Attention Seq2Seq
+Shape of encoder input 10
+Shape of decoder input 15
+num_encoder_symbols = 200
+num_decoder_symbols 200
+embedding_size 1024
+output_projection None
+Inside method embedding_attention_seq2seq. Encoder Outputs (10,) Encode State (4,)
+Attention States has been created of size ()
+The output size is 200
+Number of heads 1
+Inside Embedding Attention Decoder
+Inside Attention Decoder
+Inside the method sequence loss
+Inside the method sequence loss by example
+Inside Method Embedding Attention Seq2Seq
+Shape of encoder input 20
+Shape of decoder input 25
+num_encoder_symbols = 200
+num_decoder_symbols 200
+embedding_size 1024
+output_projection None
+Inside method embedding_attention_seq2seq. Encoder Outputs (20,) Encode State (4,)
+Attention States has been created of size ()
+The output size is 200
+Number of heads 1
+Inside Embedding Attention Decoder
+Inside Attention Decoder
+Inside the method sequence loss
+Inside the method sequence loss by example
+Inside Method Embedding Attention Seq2Seq
+Shape of encoder input 40
+Shape of decoder input 50
+num_encoder_symbols = 200
+num_decoder_symbols 200
+embedding_size 1024
+output_projection None
+Inside method embedding_attention_seq2seq. Encoder Outputs (40,) Encode State (4,)
+Attention States has been created of size ()
+The output size is 200
+Number of heads 1
+Inside Embedding Attention Decoder
+Inside Attention Decoder
+Inside the method sequence loss
+Inside the method sequence loss by example
+Created model with fresh parameters.
+------------------------------------------------
+ Generating dictionary based on  2  scripts
+------------------------------------------------
+Reading  data/0raw.txt ...
+Reading  data/1raw.txt ...
+------------------------------------------------
+ Creating encoded file using created dictionary
+ (Saved in   X_train.txt )
+------------------------------------------------
+Reading  data/0raw.txt ...
+Reading  data/1raw.txt ...
+['goodnight', '!']
+['hello']
+2450
+Reading development and training data
+Training begins now ...
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 1 learning rate 0.5000 step-time 70.22 perplexity 197.98
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (15, 128)
+Inside method Step in Seq2Seq Model 
+global step 2 learning rate 0.5000 step-time 140.10 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 3 learning rate 0.5000 step-time 73.66 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 4 learning rate 0.5000 step-time 62.37 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 5 learning rate 0.4950 step-time 63.18 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 6 learning rate 0.4950 step-time 60.55 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 7 learning rate 0.4901 step-time 60.42 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 8 learning rate 0.4851 step-time 60.08 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (15, 128)
+Inside method Step in Seq2Seq Model 
+global step 9 learning rate 0.4851 step-time 103.03 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 10 learning rate 0.4803 step-time 59.83 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 11 learning rate 0.4803 step-time 59.46 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 12 learning rate 0.4803 step-time 59.71 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 13 learning rate 0.4803 step-time 59.53 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 14 learning rate 0.4803 step-time 59.61 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 15 learning rate 0.4803 step-time 60.88 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (25, 128)
+Inside method Step in Seq2Seq Model 
+global step 16 learning rate 0.4755 step-time 236.05 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 17 learning rate 0.4707 step-time 59.19 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 18 learning rate 0.4707 step-time 59.15 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 19 learning rate 0.4707 step-time 59.31 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 20 learning rate 0.4707 step-time 58.97 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 21 learning rate 0.4660 step-time 67.27 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 22 learning rate 0.4614 step-time 66.84 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 23 learning rate 0.4614 step-time 68.02 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (15, 128)
+Inside method Step in Seq2Seq Model 
+global step 24 learning rate 0.4614 step-time 113.81 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (15, 128)
+Inside method Step in Seq2Seq Model 
+global step 25 learning rate 0.4614 step-time 113.33 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 26 learning rate 0.4614 step-time 67.12 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (15, 128)
+Inside method Step in Seq2Seq Model 
+global step 27 learning rate 0.4568 step-time 113.09 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 28 learning rate 0.4522 step-time 66.28 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 29 learning rate 0.4522 step-time 68.87 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Inside method Step in Seq2Seq Model 
+global step 30 learning rate 0.4522 step-time 77.71 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
