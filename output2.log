@@ -1,0 +1,156 @@
+Training the model
+Creating 4 layers of 1024
+Inside method Init of Seq2Seq Model 
+In method model with buckets
+The encoder input shape (40,)
+The decoder input shape (51,)
+The targets input shape (50,)
+The weights input shape (51,)
+Calling the function embedding_attention_seq2seq 4 times
+Inside Method Embedding Attention Seq2Seq
+Shape of encoder input 5
+Shape of decoder input 10
+num_encoder_symbols = 200
+num_decoder_symbols 200
+embedding_size 1024
+output_projection None
+Inside method embedding_attention_seq2seq. Encoder Outputs (5,) Encode State (4,)
+Attention States has been created of size ()
+The output size is 200
+Number of heads 1
+Inside Embedding Attention Decoder
+Inside Attention Decoder
+The shape of the final output from the method attention_decoder (10,),(4,)
+Inside the method sequence loss
+Inside the method sequence loss by example
+Inside Method Embedding Attention Seq2Seq
+Shape of encoder input 10
+Shape of decoder input 15
+num_encoder_symbols = 200
+num_decoder_symbols 200
+embedding_size 1024
+output_projection None
+Inside method embedding_attention_seq2seq. Encoder Outputs (10,) Encode State (4,)
+Attention States has been created of size ()
+The output size is 200
+Number of heads 1
+Inside Embedding Attention Decoder
+Inside Attention Decoder
+The shape of the final output from the method attention_decoder (15,),(4,)
+Inside the method sequence loss
+Inside the method sequence loss by example
+Inside Method Embedding Attention Seq2Seq
+Shape of encoder input 20
+Shape of decoder input 25
+num_encoder_symbols = 200
+num_decoder_symbols 200
+embedding_size 1024
+output_projection None
+Inside method embedding_attention_seq2seq. Encoder Outputs (20,) Encode State (4,)
+Attention States has been created of size ()
+The output size is 200
+Number of heads 1
+Inside Embedding Attention Decoder
+Inside Attention Decoder
+The shape of the final output from the method attention_decoder (25,),(4,)
+Inside the method sequence loss
+Inside the method sequence loss by example
+Inside Method Embedding Attention Seq2Seq
+Shape of encoder input 40
+Shape of decoder input 50
+num_encoder_symbols = 200
+num_decoder_symbols 200
+embedding_size 1024
+output_projection None
+Inside method embedding_attention_seq2seq. Encoder Outputs (40,) Encode State (4,)
+Attention States has been created of size ()
+The output size is 200
+Number of heads 1
+Inside Embedding Attention Decoder
+Inside Attention Decoder
+The shape of the final output from the method attention_decoder (50,),(4,)
+Inside the method sequence loss
+Inside the method sequence loss by example
+Created model with fresh parameters.
+------------------------------------------------
+ Generating dictionary based on  2  scripts
+------------------------------------------------
+Reading  data/0raw.txt ...
+Reading  data/1raw.txt ...
+------------------------------------------------
+ Creating encoded file using created dictionary
+ (Saved in   X_train.txt )
+------------------------------------------------
+Reading  data/0raw.txt ...
+Reading  data/1raw.txt ...
+['goodnight', '!']
+['hello']
+2450
+Reading development and training data
+Training begins now ...
+Shape of target weights (10, 128)
+Shape of the flattened encoder input (5, 128)
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+<type 'list'>
+5
+Inside method Step in Seq2Seq Model 
+global step 1 learning rate 0.1000 step-time 71.85 perplexity 199.28
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity 968066332694694899256700026028449059997242682343983086359764210286592.00
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity 430198350902140462989187942722647063362780720589083492238733785601716997260627148800.00
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity 140424305787090193713126871580066231003169801799594549385647335422987296610769468129280.00
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Shape of the flattened encoder input (5, 128)
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+<type 'list'>
+5
+Inside method Step in Seq2Seq Model 
+global step 2 learning rate 0.1000 step-time 133.79 perplexity 9504508008049234643705415565819262400672563200.00
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Shape of the flattened encoder input (5, 128)
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+<type 'list'>
+5
+Inside method Step in Seq2Seq Model 
+global step 3 learning rate 0.1000 step-time 95.43 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Shape of the flattened encoder input (5, 128)
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+<type 'list'>
+5
+Inside method Step in Seq2Seq Model 
+global step 4 learning rate 0.1000 step-time 96.90 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
