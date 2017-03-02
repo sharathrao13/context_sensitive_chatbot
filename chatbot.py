@@ -30,7 +30,7 @@ tf.app.flags.DEFINE_boolean("decode", False, "Set to True for interactive decodi
 FLAGS = tf.app.flags.FLAGS
 
 # Static variables
-learning_rate = 0.5
+learning_rate = 0.1
 learning_rate_decay = 0.99
 train_dir = "./"
 steps_per_checkpoint = 1
@@ -119,7 +119,11 @@ def train():
             start_time = time.time()
             encoder_inputs, decoder_inputs, target_weights = model.get_batch(train_set, bucket_id)
             print("Shape of target weights {0}".format(np.shape(target_weights)))
-            #print(target_weights)
+            print("Shape of the flattened encoder input {0}".format(np.shape(encoder_inputs)))
+            print(encoder_inputs[0])
+            print(type(encoder_inputs))
+            print(len(encoder_inputs))
+            #print(target_weights)e
             _, step_loss, _ = model.step(sess, encoder_inputs, decoder_inputs, target_weights, bucket_id, False)
             step_time += (time.time() - start_time) / steps_per_checkpoint
             loss += step_loss / steps_per_checkpoint

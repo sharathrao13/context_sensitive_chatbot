@@ -52,7 +52,6 @@ def attention_decoder(decoder_inputs,
                       dtype=None,
                       scope=None,
                       initial_state_attention=False):
-
     print("Inside Attention Decoder")
 
     if not decoder_inputs:
@@ -152,6 +151,8 @@ def attention_decoder(decoder_inputs,
                 prev = output
             outputs.append(output)
 
+    print("The shape of the final output from the method attention_decoder {0},{1}".format(np.shape(outputs),
+                                                                                           np.shape(state)))
     return outputs, state
 
 
@@ -169,7 +170,6 @@ def embedding_attention_decoder(decoder_inputs,
                                 dtype=None,
                                 scope=None,
                                 initial_state_attention=False):
-
     print("Inside Embedding Attention Decoder")
 
     if output_size is None:
@@ -231,7 +231,7 @@ def embedding_attention_seq2seq(encoder_inputs,
                 encoder_cell, encoder_inputs, dtype=dtype)
 
         print("Inside method embedding_attention_seq2seq. Encoder Outputs {0} Encode State {1}".format(
-            np.shape(encoder_outputs), np.shape(encoder_state)))
+                np.shape(encoder_outputs), np.shape(encoder_state)))
 
         # First calculate a concatenation of encoder outputs to put attention on.
         top_states = [array_ops.reshape(e, [-1, 1, cell.output_size])
@@ -247,7 +247,7 @@ def embedding_attention_seq2seq(encoder_inputs,
             print("The output size is {0}".format(output_size))
 
         if isinstance(feed_previous, bool):
-            print ("Number of heads {0}".format(num_heads))
+            print("Number of heads {0}".format(num_heads))
             return embedding_attention_decoder(
                     decoder_inputs,
                     encoder_state,
@@ -301,7 +301,6 @@ def sequence_loss_by_example(logits, targets, weights,
                              softmax_loss_function=None, name=None):
     print("Inside the method sequence loss by example")
 
-
     if len(targets) != len(logits) or len(weights) != len(logits):
         raise ValueError("Lengths of logits, weights, and targets must be the same "
                          "%d, %d, %d." % (len(logits), len(weights), len(targets)))
@@ -330,7 +329,6 @@ def sequence_loss_by_example(logits, targets, weights,
 def sequence_loss(logits, targets, weights,
                   average_across_timesteps=True, average_across_batch=True,
                   softmax_loss_function=None, name=None):
-
     print("Inside the method sequence loss")
     with ops.name_scope(name, "sequence_loss", logits + targets + weights):
         cost = math_ops.reduce_sum(sequence_loss_by_example(
@@ -397,10 +395,6 @@ def model_with_buckets(encoder_inputs, decoder_inputs, targets, weights,
     print("The decoder input shape {0}".format(np.shape(decoder_inputs)))
     print("The targets input shape {0}".format(np.shape(targets)))
     print("The weights input shape {0}".format(np.shape(weights)))
-    print("The encoder input data {0}".format(encoder_inputs[0]))
-    print("The decoder input data {0}".format(decoder_inputs[0]))
-    print("The targets input data {0}".format(targets[0]))
-    print("The weights input data {0}".format(weights[0]))
 
     all_inputs = encoder_inputs + decoder_inputs + targets + weights
     losses = []
