@@ -161,7 +161,7 @@ class Seq2SeqModel(object):
         if forward_only:
             self.outputs, self.losses = model_with_buckets(
                     self.encoder_inputs, self.context_inputs, self.decoder_inputs, targets,
-                    self.target_weights, buckets, lambda x, y: seq2seq_f(x, y, True),
+                    self.target_weights, buckets, lambda x, y,z: seq2seq_f(x, y,z, True),
                     softmax_loss_function=softmax_loss_function)
             # If we use output projection, we need to project outputs for decoding.
             if output_projection is not None:
@@ -174,7 +174,7 @@ class Seq2SeqModel(object):
             self.outputs, self.losses = model_with_buckets(
                     self.encoder_inputs, self.context_inputs, self.decoder_inputs, targets,
                     self.target_weights, buckets,
-                    lambda x, y: seq2seq_f(x, y, False),
+                    lambda x, y,z: seq2seq_f(x, y, z,False),
                     softmax_loss_function=softmax_loss_function)
 
         # Gradients and SGD update operation for training the model.

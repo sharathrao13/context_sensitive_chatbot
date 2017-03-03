@@ -223,22 +223,24 @@ def embedding_attention_seq2seq(encoder_inputs,
     print("output_projection {0}".format(output_projection))
 
     with variable_scope.variable_scope(
-                    scope or "embedding_attention_seq2seq", dtype=dtype) as scope:
+                    scope or "embedding_attention_seq2seq", dtype=dtype,reuse=None) as scope:
         dtype = scope.dtype
-        # Encoder.
-        encoder_cell = rnn_cell.EmbeddingWrapper(
-                cell, embedding_classes=num_encoder_symbols,
-                embedding_size=embedding_size)
-        encoder_outputs, encoder_state = rnn.rnn(
-                encoder_cell, encoder_inputs, dtype=dtype)
+        
+        with variable_scope.variable_scope("encoder") as scope2:# Encoder.
+            encoder_cell = rnn_cell.EmbeddingWrapper(
+                    cell, embedding_classes=num_encoder_symbols,
+                    embedding_size=embedding_size)
+            encoder_outputs, encoder_state = rnn.rnn(
+                    encoder_cell, encoder_inputs, dtype=dtype)
 
-        context_cell = rnn_cell.EmbeddingWrapper(cell, embedding_classes=num_encoder_symbols,
-                                                 embedding_size=embedding_size)
-        context_outputs, context_state = rnn.rnn(
-                context_cell, context_inputs, dtype=dtype)
+        with variable_scope.variable_scope("context") as scope3:
+            context_cell = rnn_cell.EmbeddingWrapper(cell, embedding_classes=num_encoder_symbols,
+                                                     embedding_size=embedding_size)
+            context_outputs, context_state = rnn.rnn(
+                    context_cell, context_inputs, dtype=dtype)
 
-        np.savetxt('context_output.txt', context_outputs)
-        np.savetxt('context_state.txt', context_state)
+        #np.savetxt('context_output.txt', context_outputs)
+        #np.savetxt('context_state.txt', context_state)
         print("The dimension of context state {0}".format(context_state))
 
 
