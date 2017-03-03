@@ -242,11 +242,17 @@ def embedding_attention_seq2seq(encoder_inputs,
             context_outputs, context_state = rnn.rnn(
                     context_cell, context_inputs, dtype=dtype)
 
+            target = open("context_output.txt", 'w')
+            for out in context_outputs:
+                target.write(str(out))
+                target.write("\n")
+            target.close()
+
             #np.savetxt('context_output.txt', context_outputs)
             #np.savetxt('context_state.txt', context_state)
 
         #print("The dimension of context state {0}".format(context_state))
-        m = tf.Print(context_state,[context_state],message="Printing the context State")
+        #m = tf.Print(context_state,[context_state],message="Printing the context State")
 
 
         print("Inside method embedding_attention_seq2seq. Encoder Outputs {0} Encode State {1}".format(
