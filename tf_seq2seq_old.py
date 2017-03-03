@@ -18,6 +18,7 @@ from tensorflow.python.ops import rnn
 from tensorflow.python.ops import rnn_cell
 from tensorflow.python.ops import variable_scope
 from tensorflow.python.util import nest
+import tensorflow as tf
 
 import numpy as np
 
@@ -200,6 +201,7 @@ def embedding_attention_decoder(decoder_inputs,
 
 
 def embedding_attention_seq2seq(encoder_inputs,
+                                context_inputs,
                                 decoder_inputs,
                                 cell,
                                 num_encoder_symbols,
@@ -229,6 +231,16 @@ def embedding_attention_seq2seq(encoder_inputs,
                 embedding_size=embedding_size)
         encoder_outputs, encoder_state = rnn.rnn(
                 encoder_cell, encoder_inputs, dtype=dtype)
+
+        context_cell = rnn_cell.EmbeddingWrapper(cell, embedding_classes=num_encoder_symbols,
+                                                 embedding_size=embedding_size)
+        context_outputs, context_state = rnn.rnn(
+                context_cell, context_inputs, dtype=dtype)
+
+        np.savetxt('context_output.txt', context_outputs)
+        np.savetxt('context_state.txt', context_state)
+        print("The dimension of context state {0}".format(context_state))
+
 
         print("Inside method embedding_attention_seq2seq. Encoder Outputs {0} Encode State {1}".format(
                 np.shape(encoder_outputs), np.shape(encoder_state)))
@@ -342,7 +354,7 @@ def sequence_loss(logits, targets, weights,
             return cost
 
 
-def model_with_buckets(encoder_inputs, decoder_inputs, targets, weights,
+def model_with_buckets(encoder_inputs, context_inputs, decoder_inputs, targets, weights,
                        buckets, seq2seq, softmax_loss_function=None,
                        per_example_loss=False, name=None):
     """Create a sequence-to-sequence model with support for bucketing.
@@ -406,6 +418,7 @@ def model_with_buckets(encoder_inputs, decoder_inputs, targets, weights,
                                                reuse=True if j > 0 else None):
 
                 bucket_outputs, _ = seq2seq(encoder_inputs[:bucket[0]],
+                                            context_inputs[:bucket[0]],
                                             decoder_inputs[:bucket[1]])
                 outputs.append(bucket_outputs)
                 if per_example_loss:

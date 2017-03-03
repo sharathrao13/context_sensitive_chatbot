@@ -48,6 +48,7 @@ def read_data(source_path, target_path):
         with tf.gfile.GFile(target_path, mode="r") as target_file:
             source, target = source_file.readline(), target_file.readline()
             counter = 0
+            context_ids = []
             while source and target:
 
                 counter += 1
@@ -55,12 +56,15 @@ def read_data(source_path, target_path):
                     print("  reading data line %d" % counter)
                     sys.stdout.flush()
                 source_ids = [int(x) for x in source.split()]
+                if not context_ids:
+                    context_ids = source_ids
                 target_ids = [int(x) for x in target.split()]
                 target_ids.append(prepros.EOS_ID)
                 for bucket_id, (source_size, target_size) in enumerate(_buckets):
                     if len(source_ids) < source_size and len(target_ids) < target_size:
-                        data_set[bucket_id].append([source_ids, target_ids])
+                        data_set[bucket_id].append([source_ids, context_ids,target_ids])
                         break
+                context_ids = source_ids
                 source, target = source_file.readline(), target_file.readline()
     return data_set
 
@@ -83,22 +87,20 @@ def create_model(session, forward_only):
 
 
 def train():
-    print("Training the model")
 
-    en_train = './X_train.txt'
-    fr_train = './y_train.txt'
-    en_dev = './y_dev.txt'
-    fr_dev = './X_dev.txt'
+    source_train = './X_train.txt'
+    destination_train = './y_train.txt'
+    source_validation = './y_dev.txt'
+    destination_validation = './X_dev.txt'
 
     with tf.Session() as sess:
-        # Create model.
         print("Creating " + str(FLAGS.num_layers) + " layers of " + str(FLAGS.size))
         model = create_model(sess, False)
 
         # Read data into buckets and compute their sizes.
         print("Reading development and training data")
-        dev_set = read_data(en_dev, fr_dev)
-        train_set = read_data(en_train, fr_train)
+        val_set = read_data(source_validation, destination_validation)
+        train_set = read_data(source_train, destination_train)
         train_bucket_sizes = [len(train_set[b]) for b in xrange(len(_buckets))]
         train_total_size = float(sum(train_bucket_sizes))
 
@@ -117,14 +119,14 @@ def train():
 
             # Get a batch and make a step.
             start_time = time.time()
-            encoder_inputs, decoder_inputs, target_weights = model.get_batch(train_set, bucket_id)
+            encoder_inputs, context_inputs, decoder_inputs, target_weights = model.get_batch(train_set, bucket_id)
             print("Shape of target weights {0}".format(np.shape(target_weights)))
             print("Shape of the flattened encoder input {0}".format(np.shape(encoder_inputs)))
             print(encoder_inputs[0])
             print(type(encoder_inputs))
             print(len(encoder_inputs))
             #print(target_weights)e
-            _, step_loss, _ = model.step(sess, encoder_inputs, decoder_inputs, target_weights, bucket_id, False)
+            _, step_loss, _ = model.step(sess, encoder_inputs, context_inputs, decoder_inputs, target_weights, bucket_id, False)
             step_time += (time.time() - start_time) / steps_per_checkpoint
             loss += step_loss / steps_per_checkpoint
             current_step += 1
@@ -148,10 +150,10 @@ def train():
                 step_time, loss = 0.0, 0.0
                 # Run evals on development set and print their perplexity.
                 for bucket_id in xrange(len(_buckets)):
-                    if len(dev_set[bucket_id]) == 0:
+                    if len(val_set[bucket_id]) == 0:
                         print("  eval: empty bucket %d" % (bucket_id))
                         continue
-                    encoder_inputs, decoder_inputs, target_weights = model.get_batch(dev_set, bucket_id)
+                    encoder_inputs, decoder_inputs, target_weights = model.get_batch(val_set, bucket_id)
                     _, eval_loss, _ = model.step(sess, encoder_inputs, decoder_inputs, target_weights, bucket_id, True)
                     if eval_loss < 300:
                         eval_ppx = math.exp(eval_loss)
