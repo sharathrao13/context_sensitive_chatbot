@@ -233,8 +233,8 @@ def embedding_attention_seq2seq(encoder_inputs,
             encoder_outputs, encoder_state = rnn.rnn(
                     encoder_cell, encoder_inputs, dtype=dtype)
             print(type(encoder_outputs))
-            np.savetxt('encoder_output.txt', encoder_outputs)
-            np.savetxt('encoder_state.txt', encoder_state)
+            #np.savetxt('encoder_output.txt', encoder_outputs)
+            #np.savetxt('encoder_state.txt', encoder_state)
 
         with variable_scope.variable_scope("context") as scope3:
             context_cell = rnn_cell.EmbeddingWrapper(cell, embedding_classes=num_encoder_symbols,
@@ -242,10 +242,11 @@ def embedding_attention_seq2seq(encoder_inputs,
             context_outputs, context_state = rnn.rnn(
                     context_cell, context_inputs, dtype=dtype)
 
-            np.savetxt('context_output.txt', context_outputs)
-            np.savetxt('context_state.txt', context_state)
+            #np.savetxt('context_output.txt', context_outputs)
+            #np.savetxt('context_state.txt', context_state)
 
-        print("The dimension of context state {0}".format(context_state))
+        #print("The dimension of context state {0}".format(context_state))
+        m = tf.Print(context_state,[context_state],message="Printing the context State")
 
 
         print("Inside method embedding_attention_seq2seq. Encoder Outputs {0} Encode State {1}".format(

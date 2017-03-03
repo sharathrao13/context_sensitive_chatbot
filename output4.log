@@ -1,0 +1,141 @@
+Creating 4 layers of 1024
+Inside method Init of Seq2Seq Model 
+In method model with buckets
+The encoder input shape (40,)
+The decoder input shape (51,)
+The targets input shape (50,)
+The weights input shape (51,)
+Calling the function embedding_attention_seq2seq 4 times
+Inside Method Embedding Attention Seq2Seq
+Shape of encoder input 5
+Shape of decoder input 10
+num_encoder_symbols = 200
+num_decoder_symbols 200
+embedding_size 1024
+output_projection None
+<type 'list'>
+The dimension of context state (<tf.Tensor 'model_with_buckets/embedding_attention_seq2seq/context/RNN/MultiRNNCell_4/Cell0/GRUCell/add:0' shape=(?, 1024) dtype=float32>, <tf.Tensor 'model_with_buckets/embedding_attention_seq2seq/context/RNN/MultiRNNCell_4/Cell1/GRUCell/add:0' shape=(?, 1024) dtype=float32>, <tf.Tensor 'model_with_buckets/embedding_attention_seq2seq/context/RNN/MultiRNNCell_4/Cell2/GRUCell/add:0' shape=(?, 1024) dtype=float32>, <tf.Tensor 'model_with_buckets/embedding_attention_seq2seq/context/RNN/MultiRNNCell_4/Cell3/GRUCell/add:0' shape=(?, 1024) dtype=float32>)
+Inside method embedding_attention_seq2seq. Encoder Outputs (5,) Encode State (4,)
+Attention States has been created of size ()
+The output size is 200
+Number of heads 1
+Inside Embedding Attention Decoder
+Inside Attention Decoder
+The shape of the final output from the method attention_decoder (10,),(4,)
+Inside the method sequence loss
+Inside the method sequence loss by example
+Inside Method Embedding Attention Seq2Seq
+Shape of encoder input 10
+Shape of decoder input 15
+num_encoder_symbols = 200
+num_decoder_symbols 200
+embedding_size 1024
+output_projection None
+<type 'list'>
+The dimension of context state (<tf.Tensor 'model_with_buckets/embedding_attention_seq2seq_1/context/RNN/MultiRNNCell_9/Cell0/GRUCell/add:0' shape=(?, 1024) dtype=float32>, <tf.Tensor 'model_with_buckets/embedding_attention_seq2seq_1/context/RNN/MultiRNNCell_9/Cell1/GRUCell/add:0' shape=(?, 1024) dtype=float32>, <tf.Tensor 'model_with_buckets/embedding_attention_seq2seq_1/context/RNN/MultiRNNCell_9/Cell2/GRUCell/add:0' shape=(?, 1024) dtype=float32>, <tf.Tensor 'model_with_buckets/embedding_attention_seq2seq_1/context/RNN/MultiRNNCell_9/Cell3/GRUCell/add:0' shape=(?, 1024) dtype=float32>)
+Inside method embedding_attention_seq2seq. Encoder Outputs (10,) Encode State (4,)
+Attention States has been created of size ()
+The output size is 200
+Number of heads 1
+Inside Embedding Attention Decoder
+Inside Attention Decoder
+The shape of the final output from the method attention_decoder (15,),(4,)
+Inside the method sequence loss
+Inside the method sequence loss by example
+Inside Method Embedding Attention Seq2Seq
+Shape of encoder input 20
+Shape of decoder input 25
+num_encoder_symbols = 200
+num_decoder_symbols 200
+embedding_size 1024
+output_projection None
+<type 'list'>
+The dimension of context state (<tf.Tensor 'model_with_buckets/embedding_attention_seq2seq_2/context/RNN/MultiRNNCell_19/Cell0/GRUCell/add:0' shape=(?, 1024) dtype=float32>, <tf.Tensor 'model_with_buckets/embedding_attention_seq2seq_2/context/RNN/MultiRNNCell_19/Cell1/GRUCell/add:0' shape=(?, 1024) dtype=float32>, <tf.Tensor 'model_with_buckets/embedding_attention_seq2seq_2/context/RNN/MultiRNNCell_19/Cell2/GRUCell/add:0' shape=(?, 1024) dtype=float32>, <tf.Tensor 'model_with_buckets/embedding_attention_seq2seq_2/context/RNN/MultiRNNCell_19/Cell3/GRUCell/add:0' shape=(?, 1024) dtype=float32>)
+Inside method embedding_attention_seq2seq. Encoder Outputs (20,) Encode State (4,)
+Attention States has been created of size ()
+The output size is 200
+Number of heads 1
+Inside Embedding Attention Decoder
+Inside Attention Decoder
+The shape of the final output from the method attention_decoder (25,),(4,)
+Inside the method sequence loss
+Inside the method sequence loss by example
+Inside Method Embedding Attention Seq2Seq
+Shape of encoder input 40
+Shape of decoder input 50
+num_encoder_symbols = 200
+num_decoder_symbols 200
+embedding_size 1024
+output_projection None
+<type 'list'>
+The dimension of context state (<tf.Tensor 'model_with_buckets/embedding_attention_seq2seq_3/context/RNN/MultiRNNCell_39/Cell0/GRUCell/add:0' shape=(?, 1024) dtype=float32>, <tf.Tensor 'model_with_buckets/embedding_attention_seq2seq_3/context/RNN/MultiRNNCell_39/Cell1/GRUCell/add:0' shape=(?, 1024) dtype=float32>, <tf.Tensor 'model_with_buckets/embedding_attention_seq2seq_3/context/RNN/MultiRNNCell_39/Cell2/GRUCell/add:0' shape=(?, 1024) dtype=float32>, <tf.Tensor 'model_with_buckets/embedding_attention_seq2seq_3/context/RNN/MultiRNNCell_39/Cell3/GRUCell/add:0' shape=(?, 1024) dtype=float32>)
+Inside method embedding_attention_seq2seq. Encoder Outputs (40,) Encode State (4,)
+Attention States has been created of size ()
+The output size is 200
+Number of heads 1
+Inside Embedding Attention Decoder
+Inside Attention Decoder
+The shape of the final output from the method attention_decoder (50,),(4,)
+Inside the method sequence loss
+Inside the method sequence loss by example
+Created model with fresh parameters.
+------------------------------------------------
+ Generating dictionary based on  2  scripts
+------------------------------------------------
+Reading  data/0raw.txt ...
+Reading  data/1raw.txt ...
+------------------------------------------------
+ Creating encoded file using created dictionary
+ (Saved in   X_train.txt )
+------------------------------------------------
+Reading  data/0raw.txt ...
+Reading  data/1raw.txt ...
+['goodnight', '!']
+['hello']
+2450
+Reading development and training data
+Training begins now ...
+Shape of target weights (10, 128)
+Shape of the flattened encoder input (5, 128)
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+<type 'list'>
+5
+Inside method Step in Seq2Seq Model 
+global step 1 learning rate 0.1000 step-time 39.21 perplexity 199.43
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity 360891745570177161874371780385177600.00
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity 294464527547680702891278921771956322697216.00
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity 3652368394450333379258787628811490626965078016.00
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Shape of the flattened encoder input (5, 128)
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+<type 'list'>
+5
+Inside method Step in Seq2Seq Model 
+global step 2 learning rate 0.1000 step-time 50.38 perplexity 7472158650393508708352.00
+Inside method Step in Seq2Seq Model 
+  eval: bucket 0 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 1 perplexity inf
+Inside method Step in Seq2Seq Model 
+  eval: bucket 2 perplexity inf
+  eval: empty bucket 3
+Shape of target weights (10, 128)
+Shape of the flattened encoder input (5, 128)
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+<type 'list'>
+5
+Inside method Step in Seq2Seq Model 
+global step 3 learning rate 0.1000 step-time 61.60 perplexity inf

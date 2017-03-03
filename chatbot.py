@@ -153,8 +153,8 @@ def train():
                     if len(val_set[bucket_id]) == 0:
                         print("  eval: empty bucket %d" % (bucket_id))
                         continue
-                    encoder_inputs, decoder_inputs, target_weights = model.get_batch(val_set, bucket_id)
-                    _, eval_loss, _ = model.step(sess, encoder_inputs, decoder_inputs, target_weights, bucket_id, True)
+                    encoder_inputs,context_inputs, decoder_inputs, target_weights = model.get_batch(val_set, bucket_id)
+                    _, eval_loss, _ = model.step(sess, encoder_inputs, context_inputs,decoder_inputs, target_weights, bucket_id, True)
                     if eval_loss < 300:
                         eval_ppx = math.exp(eval_loss)
                     else:
