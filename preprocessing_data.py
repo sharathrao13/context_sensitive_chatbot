@@ -6,10 +6,10 @@ from tensorflow.python.platform import gfile
 num_movie_scripts = 6
 vocabulary_size =200
 fraction_dev = 50
-path_for_x_train = 'X_train.txt'
-path_for_y_train = 'y_train.txt'
-path_for_x_dev = 'X_dev.txt'
-path_for_y_dev = 'y_dev.txt'
+path_for_x_train = 'data/X_train.txt'
+path_for_y_train = 'data/y_train.txt'
+path_for_x_dev = 'data/X_dev.txt'
+path_for_y_dev = 'data/y_dev.txt'
 
 
 _PAD = b"_PAD"
@@ -108,10 +108,6 @@ def generate_encoded_files(x_train_file, y_train_file, x_dev_file, y_dev_file, t
     last_line = tokenized_sentences.pop()
     first_line = tokenized_sentences.pop(0)
     dev_counter = int(len(tokenized_sentences) - len(tokenized_sentences)/fraction_dev)
-
-    print last_line
-    print first_line
-    print dev_counter
 
     unk_id = dictionary['_UNK']
     first_line_encoded = encode_sentence(first_line, dictionary, unk_id)

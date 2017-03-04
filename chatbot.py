@@ -17,25 +17,25 @@ import preprocessing_data as prepros
 #from tensorflow.models.rnn.translate import seq2seq_model
 import seq2seq_model
 
-vocab_path = './vocabulary_for_movies.txt'
+vocab_path = './models/vocabulary_for_movies.txt'
 
 # Variables user can change
 tf.app.flags.DEFINE_integer("batch_size", 128, "Batch size to use during training")
 tf.app.flags.DEFINE_integer("size", 1024, "Size of each model layer")
 tf.app.flags.DEFINE_integer("num_layers", 4, "Number of layers in the model")
-tf.app.flags.DEFINE_integer("vocab_size", 200, "Vocabulary size")
+tf.app.flags.DEFINE_integer("vocab_size", 7000, "Vocabulary size")
 tf.app.flags.DEFINE_boolean("use_lstm", False, "Use LSTM as cell")
 tf.app.flags.DEFINE_boolean("decode", False, "Set to True for interactive decoding")
 
 FLAGS = tf.app.flags.FLAGS
 
 # Static variables
-learning_rate = 0.1
+learning_rate = 0.5
 learning_rate_decay = 0.99
-train_dir = "./"
-steps_per_checkpoint = 1
+train_dir = "./models/"
+steps_per_checkpoint = 10
 gradients_clip = 5.0
-num_movie_scripts = 2
+num_movie_scripts = 2318
 
 # We use a number of buckets and pad to the closest one for efficiency.
 # See seq2seq_model.Seq2SeqModel for details of how they work.
@@ -120,11 +120,11 @@ def train():
             # Get a batch and make a step.
             start_time = time.time()
             encoder_inputs, context_inputs, decoder_inputs, target_weights = model.get_batch(train_set, bucket_id)
-            print("Shape of target weights {0}".format(np.shape(target_weights)))
-            print("Shape of the flattened encoder input {0}".format(np.shape(encoder_inputs)))
-            print(encoder_inputs[0])
-            print(type(encoder_inputs))
-            print(len(encoder_inputs))
+            #print("Shape of target weights {0}".format(np.shape(target_weights)))
+            #print("Shape of the flattened encoder input {0}".format(np.shape(encoder_inputs)))
+            #print(encoder_inputs[0])
+            #print(type(encoder_inputs))
+            #print(len(encoder_inputs))
             #print(target_weights)e
             _, step_loss, _ = model.step(sess, encoder_inputs, context_inputs, decoder_inputs, target_weights, bucket_id, False)
             step_time += (time.time() - start_time) / steps_per_checkpoint

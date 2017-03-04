@@ -53,7 +53,7 @@ def attention_decoder(decoder_inputs,
                       dtype=None,
                       scope=None,
                       initial_state_attention=False):
-    print("Inside Attention Decoder")
+    #print("Inside Attention Decoder")
 
     if not decoder_inputs:
         raise ValueError("Must provide at least 1 input to attention decoder.")
@@ -171,7 +171,7 @@ def embedding_attention_decoder(decoder_inputs,
                                 dtype=None,
                                 scope=None,
                                 initial_state_attention=False):
-    print("Inside Embedding Attention Decoder")
+    #print("Inside Embedding Attention Decoder")
 
     if output_size is None:
         output_size = cell.output_size
@@ -213,13 +213,13 @@ def embedding_attention_seq2seq(encoder_inputs,
                                 dtype=None,
                                 scope=None,
                                 initial_state_attention=False):
-    print("Inside Method Embedding Attention Seq2Seq")
+    #print("Inside Method Embedding Attention Seq2Seq")
 
-    print("Shape of encoder input {0}".format(len(encoder_inputs)))
-    print("Shape of decoder input {0}".format(len(decoder_inputs)))
-    print("num_encoder_symbols = {0}".format(num_encoder_symbols))
-    print("num_decoder_symbols {0}".format(num_decoder_symbols))
-    print("embedding_size {0}".format(embedding_size))
+    #print("Shape of encoder input {0}".format(len(encoder_inputs)))
+    #print("Shape of decoder input {0}".format(len(decoder_inputs)))
+    #print("num_encoder_symbols = {0}".format(num_encoder_symbols))
+    ###print("num_decoder_symbols {0}".format(num_decoder_symbols))
+    #print("embedding_size {0}".format(embedding_size))
     print("output_projection {0}".format(output_projection))
 
     with variable_scope.variable_scope(
@@ -232,7 +232,7 @@ def embedding_attention_seq2seq(encoder_inputs,
                     embedding_size=embedding_size)
             encoder_outputs, encoder_state = rnn.rnn(
                     encoder_cell, encoder_inputs, dtype=dtype)
-            print(type(encoder_outputs))
+            #print(type(encoder_outputs))
             #np.savetxt('encoder_output.txt', encoder_outputs)
             #np.savetxt('encoder_state.txt', encoder_state)
 
@@ -242,17 +242,42 @@ def embedding_attention_seq2seq(encoder_inputs,
             context_outputs, context_state = rnn.rnn(
                     context_cell, context_inputs, dtype=dtype)
 
-            target = open("context_output.txt", 'w')
-            for out in context_outputs:
-                target.write(str(out))
-                target.write("\n")
-            target.close()
+            #target = open("context_output.txt", 'w')
+            #for out in context_outputs:
+                #target.write(str(out))
+                #target.write("\n")
+            #target.close()
 
             #np.savetxt('context_output.txt', context_outputs)
             #np.savetxt('context_state.txt', context_state)
 
         #print("The dimension of context state {0}".format(context_state))
-        #m = tf.Print(context_state,[context_state],message="Printing the context State")
+        #context_state = tf.Print(context_state,[context_state],message="Printing the context State")
+        #context_state.eval()
+        #tf.add(context_state,context_state).eval()
+
+        #with tf.session as session_c:
+            #session_c.run(context_state)
+
+        #print("Inside method embedding_attention_seq2seq. Encoder Outputs {0} Encode State {1}".format(
+                #np.shape(encoder_outputs), np.shape(encoder_state)))
+
+        #encoder_outputs = tf.add(encoder_outputs, context_outputs)
+        #encoder_state = tf.add(encoder_state, context_state)
+
+        for i in range(len(encoder_outputs)):
+            encoder_outputs[i] = tf.add(encoder_outputs[i],context_outputs[i])
+
+        
+        temp = []
+        for i in range(len(encoder_state)):
+            temp.append(tf.add(encoder_state[i],context_state[i]))
+        encoder_state = tuple(temp)
+
+        #print(type(encoder_outputs))
+        #print(type(encoder_outputs[0]))
+        #print(type(encoder_state))
+        #print(encoder_state)
 
 
         print("Inside method embedding_attention_seq2seq. Encoder Outputs {0} Encode State {1}".format(
@@ -324,7 +349,7 @@ def embedding_attention_seq2seq(encoder_inputs,
 def sequence_loss_by_example(logits, targets, weights,
                              average_across_timesteps=True,
                              softmax_loss_function=None, name=None):
-    print("Inside the method sequence loss by example")
+    #print("Inside the method sequence loss by example")
 
     if len(targets) != len(logits) or len(weights) != len(logits):
         raise ValueError("Lengths of logits, weights, and targets must be the same "
@@ -354,7 +379,7 @@ def sequence_loss_by_example(logits, targets, weights,
 def sequence_loss(logits, targets, weights,
                   average_across_timesteps=True, average_across_batch=True,
                   softmax_loss_function=None, name=None):
-    print("Inside the method sequence loss")
+    #print("Inside the method sequence loss")
     with ops.name_scope(name, "sequence_loss", logits + targets + weights):
         cost = math_ops.reduce_sum(sequence_loss_by_example(
                 logits, targets, weights,
@@ -414,7 +439,7 @@ def model_with_buckets(encoder_inputs, context_inputs, decoder_inputs, targets, 
         raise ValueError("Length of weights (%d) must be at least that of last"
                          "bucket (%d)." % (len(weights), buckets[-1][1]))
 
-    print("In method model with buckets")
+    #print("In method model with buckets")
 
     print("The encoder input shape {0}".format(np.shape(encoder_inputs)))
     print("The decoder input shape {0}".format(np.shape(decoder_inputs)))
@@ -424,7 +449,7 @@ def model_with_buckets(encoder_inputs, context_inputs, decoder_inputs, targets, 
     all_inputs = encoder_inputs + decoder_inputs + targets + weights
     losses = []
     outputs = []
-    print("Calling the function embedding_attention_seq2seq {0} times".format(len(buckets)))
+    #print("Calling the function embedding_attention_seq2seq {0} times".format(len(buckets)))
     with ops.name_scope(name, "model_with_buckets", all_inputs):
         for j, bucket in enumerate(buckets):
             with variable_scope.variable_scope(variable_scope.get_variable_scope(),

@@ -1,0 +1,5 @@
+Tensor("model_with_buckets/embedding_attention_seq2seq/context/RNN/MultiRNNCell/Cell3/GRUCell/add:0", shape=(?, 1024), dtype=float32)
+Tensor("model_with_buckets/embedding_attention_seq2seq/context/RNN/MultiRNNCell_1/Cell3/GRUCell/add:0", shape=(?, 1024), dtype=float32)
+Tensor("model_with_buckets/embedding_attention_seq2seq/context/RNN/MultiRNNCell_2/Cell3/GRUCell/add:0", shape=(?, 1024), dtype=float32)
+Tensor("model_with_buckets/embedding_attention_seq2seq/context/RNN/MultiRNNCell_3/Cell3/GRUCell/add:0", shape=(?, 1024), dtype=float32)
+Tensor("model_with_buckets/embedding_attention_seq2seq/context/RNN/MultiRNNCell_4/Cell3/GRUCell/add:0", shape=(?, 1024), dtype=float32)
